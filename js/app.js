@@ -1,5 +1,13 @@
 (function() {
-  var Button, ControlPanel, StartButton, Timer, TimerPanel, button, div, getDOMNode, input, strong, _ref;
+  var Button, ControlPanel, StartButton, Timer, TimerPanel, button, continueMessage, div, getDOMNode, input, messageTime, strong, thanksMessage, timeoutMessage, _ref;
+
+  timeoutMessage = "Timeout!";
+
+  thanksMessage = "Thanks";
+
+  continueMessage = "Continue";
+
+  messageTime = 5;
 
   _ref = React.DOM, div = _ref.div, strong = _ref.strong, button = _ref.button, input = _ref.input;
 
@@ -143,7 +151,7 @@
       if (this.state.timeout) {
         return div({
           className: 'timeout'
-        }, "Timeout!");
+        }, timeoutMessage);
       }
       return div({}, [
         input({
@@ -229,14 +237,14 @@
       this.node.thanksButton = Button({
         label: 'Thanks',
         onClick: this.props.onMessage,
-        message: 'Thanks',
-        messageTime: 5
+        message: thanksMessage,
+        messageTime: messageTime
       });
       this.node.continueButton = Button({
         label: 'Continue',
         onClick: this.props.onMessage,
-        message: 'Continue',
-        messageTime: 5
+        message: continueMessage,
+        messageTime: messageTime
       });
       return this.node.resetButton = Button({
         label: 'Reset',

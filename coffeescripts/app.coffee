@@ -1,4 +1,12 @@
 
+# Message
+
+timeoutMessage = "Timeout!"
+thanksMessage = "Thanks"
+continueMessage = "Continue"
+
+messageTime = 5
+
 # React DOM
 {div, strong, button, input} = React.DOM
 
@@ -103,7 +111,7 @@ Timer = React.createClass {
   render: ->
     if @state.message and @state.messageTime > 0 then return (div {className: 'message'}, @state.message)
     if @state.running then return (div {className: @state.className}, @prettyDisplay())
-    if @state.timeout then return (div {className: 'timeout'}, "Timeout!")
+    if @state.timeout then return (div {className: 'timeout'}, timeoutMessage)
     (div {}, [
       input {type: 'number', defaultValue: '1', ref: 'minute'}, ":"
       input {type: 'number', defaultValue: '0', ref: 'second'}
@@ -162,8 +170,8 @@ ControlPanel = React.createClass {
   componentWillMount: ->
     @node = {}
     @node.startButton = (StartButton {startLabel: 'Start', pauseLabel: 'Pause', onStart: @props.onStart, onPause: @props.onPause})
-    @node.thanksButton = (Button {label: 'Thanks', onClick: @props.onMessage, message: 'Thanks', messageTime: 5})
-    @node.continueButton = (Button {label: 'Continue', onClick: @props.onMessage, message: 'Continue', messageTime: 5})
+    @node.thanksButton = (Button {label: 'Thanks', onClick: @props.onMessage, message: thanksMessage, messageTime: messageTime})
+    @node.continueButton = (Button {label: 'Continue', onClick: @props.onMessage, message: continueMessage, messageTime: messageTime})
     @node.resetButton = (Button {label: 'Reset', onClick: @props.onReset})
   render: ->
     (
