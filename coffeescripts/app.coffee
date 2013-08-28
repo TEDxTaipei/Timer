@@ -8,7 +8,7 @@ continueMessage = "Continue"
 messageTime = 5
 
 # React DOM
-{div, strong, button, input} = React.DOM
+{div, strong, button, input, audio} = React.DOM
 
 # Get DOMNode
 getDOMNode = (node) ->
@@ -111,7 +111,7 @@ Timer = React.createClass {
   render: ->
     if @state.message and @state.messageTime > 0 then return (div {className: 'message'}, @state.message)
     if @state.running then return (div {className: @state.className}, @prettyDisplay())
-    if @state.timeout then return (div {className: 'timeout'}, timeoutMessage)
+    if @state.timeout then return (div {className: 'timeout'}, [timeoutMessage, (audio {src: 'ring.mp3', autoPlay: true})])
     (div {}, [
       input {type: 'number', defaultValue: '1', ref: 'minute'}, ":"
       input {type: 'number', defaultValue: '0', ref: 'second'}

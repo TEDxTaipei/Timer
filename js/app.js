@@ -1,5 +1,5 @@
 (function() {
-  var Button, ControlPanel, StartButton, Timer, TimerPanel, button, continueMessage, div, getDOMNode, input, messageTime, strong, thanksMessage, timeoutMessage, _ref;
+  var Button, ControlPanel, StartButton, Timer, TimerPanel, audio, button, continueMessage, div, getDOMNode, input, messageTime, strong, thanksMessage, timeoutMessage, _ref;
 
   timeoutMessage = "Timeout!";
 
@@ -9,7 +9,7 @@
 
   messageTime = 5;
 
-  _ref = React.DOM, div = _ref.div, strong = _ref.strong, button = _ref.button, input = _ref.input;
+  _ref = React.DOM, div = _ref.div, strong = _ref.strong, button = _ref.button, input = _ref.input, audio = _ref.audio;
 
   getDOMNode = function(node) {
     return node.getDOMNode();
@@ -151,7 +151,12 @@
       if (this.state.timeout) {
         return div({
           className: 'timeout'
-        }, timeoutMessage);
+        }, [
+          timeoutMessage, audio({
+            src: 'ring.mp3',
+            autoPlay: true
+          })
+        ]);
       }
       return div({}, [
         input({
