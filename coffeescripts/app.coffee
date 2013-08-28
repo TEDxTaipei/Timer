@@ -7,6 +7,12 @@ continueMessage = "Continue"
 
 messageTime = 5
 
+startButtonString = "Start"
+pauseButtonString = "Pause"
+thanksButtonString = "Thanks"
+continueButtonString = "Continue"
+resetButtonString = "Reset"
+
 # React DOM
 {div, strong, button, input, audio} = React.DOM
 
@@ -62,8 +68,6 @@ CurrentTime = React.createClass {
 
   getTimeString: ->
     timeString = (new Date()).toLocaleString("zh-TW", {
-      month: "short"
-      day: "numeric"
       hour: "numeric"
       minute: "numeric"
       second: "numeric"
@@ -196,10 +200,10 @@ StartButton = React.createClass {
 ControlPanel = React.createClass {
   componentWillMount: ->
     @node = {}
-    @node.startButton = (StartButton {startLabel: 'Start', pauseLabel: 'Pause', onStart: @props.onStart, onPause: @props.onPause})
-    @node.thanksButton = (Button {label: 'Thanks', onClick: @props.onMessage, message: thanksMessage, messageTime: messageTime})
-    @node.continueButton = (Button {label: 'Continue', onClick: @props.onMessage, message: continueMessage, messageTime: messageTime})
-    @node.resetButton = (Button {label: 'Reset', onClick: @props.onReset})
+    @node.startButton = (StartButton {startLabel: startButtonString, pauseLabel: pauseButtonString, onStart: @props.onStart, onPause: @props.onPause})
+    @node.thanksButton = (Button {label: thanksButtonString, onClick: @props.onMessage, message: thanksMessage, messageTime: messageTime})
+    @node.continueButton = (Button {label: continueButtonString, onClick: @props.onMessage, message: continueMessage, messageTime: messageTime})
+    @node.resetButton = (Button {label: resetButtonString, onClick: @props.onReset})
   render: ->
     (
       div {id: 'control-panel'}, [

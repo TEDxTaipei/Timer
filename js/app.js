@@ -1,5 +1,5 @@
 (function() {
-  var Button, ControlPanel, CurrentTime, StartButton, Timer, TimerPanel, audio, button, continueMessage, div, getDOMNode, input, messageTime, strong, thanksMessage, timeoutMessage, _ref;
+  var Button, ControlPanel, CurrentTime, StartButton, Timer, TimerPanel, audio, button, continueButtonString, continueMessage, div, getDOMNode, input, messageTime, pauseButtonString, resetButtonString, startButtonString, strong, thanksButtonString, thanksMessage, timeoutMessage, _ref;
 
   timeoutMessage = "Timeout!";
 
@@ -8,6 +8,16 @@
   continueMessage = "Continue";
 
   messageTime = 5;
+
+  startButtonString = "Start";
+
+  pauseButtonString = "Pause";
+
+  thanksButtonString = "Thanks";
+
+  continueButtonString = "Continue";
+
+  resetButtonString = "Reset";
 
   _ref = React.DOM, div = _ref.div, strong = _ref.strong, button = _ref.button, input = _ref.input, audio = _ref.audio;
 
@@ -77,8 +87,6 @@
       var timeString;
 
       return timeString = (new Date()).toLocaleString("zh-TW", {
-        month: "short",
-        day: "numeric",
         hour: "numeric",
         minute: "numeric",
         second: "numeric"
@@ -272,25 +280,25 @@
     componentWillMount: function() {
       this.node = {};
       this.node.startButton = StartButton({
-        startLabel: 'Start',
-        pauseLabel: 'Pause',
+        startLabel: startButtonString,
+        pauseLabel: pauseButtonString,
         onStart: this.props.onStart,
         onPause: this.props.onPause
       });
       this.node.thanksButton = Button({
-        label: 'Thanks',
+        label: thanksButtonString,
         onClick: this.props.onMessage,
         message: thanksMessage,
         messageTime: messageTime
       });
       this.node.continueButton = Button({
-        label: 'Continue',
+        label: continueButtonString,
         onClick: this.props.onMessage,
         message: continueMessage,
         messageTime: messageTime
       });
       return this.node.resetButton = Button({
-        label: 'Reset',
+        label: resetButtonString,
         onClick: this.props.onReset
       });
     },
