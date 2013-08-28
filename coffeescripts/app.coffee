@@ -17,6 +17,7 @@ getDOMNode = (node) ->
 TimerPanel = React.createClass {
   componentWillMount: ->
     @node = {}
+    @node.currentTime = (CurrentTime {})
     @node.timer = (Timer {onPause: @handlePause})
     @node.controlPanel = (ControlPanel {
       onStart: @handleStart
@@ -43,9 +44,35 @@ TimerPanel = React.createClass {
 
   render: ->
     (div {}, [
-      @node.timer,
+      @node.currentTime
+      @node.timer
       @node.controlPanel
     ])
+}
+
+CurrentTime = React.createClass {
+  getInitialState: ->
+    {time: @getTimeString()}
+
+  componentDidMount: ->
+    @timer = setInterval(@updateTime, 1000)
+
+  updateTime: ->
+    @setState {time: @getTimeString()}
+
+  getTimeString: ->
+    timeString = (new Date()).toLocaleString("zh-TW", {
+      month: "short"
+      day: "numeric"
+      hour: "numeric"
+      minute: "numeric"
+      second: "numeric"
+    })
+
+  render: ->
+    (
+      div {id: 'time-panel'}, @state.time
+    )
 }
 
 Timer = React.createClass {
@@ -109,10 +136,10 @@ Timer = React.createClass {
     return "#{minutes} : #{seconds}"
 
   render: ->
-    if @state.message and @state.messageTime > 0 then return (div {className: 'message'}, @state.message)
-    if @state.running then return (div {className: @state.className}, @prettyDisplay())
-    if @state.timeout then return (div {className: 'timeout'}, [timeoutMessage, (audio {src: 'ring.mp3', autoPlay: true})])
-    (div {}, [
+    if @state.message and @state.messageTime > 0 then return (div {id: 'timer', className: 'message'}, @state.message)
+    if @state.running then return (div {id: 'timer', className: @state.className}, @prettyDisplay())
+    if @state.timeout then return (div {id: 'timer', className: 'timeout'}, [timeoutMessage, (audio {src: 'ring.mp3', autoPlay: true})])
+    (div {id: 'timer'}, [
       input {type: 'number', defaultValue: '1', ref: 'minute'}, ":"
       input {type: 'number', defaultValue: '0', ref: 'second'}
     ])
@@ -175,7 +202,7 @@ ControlPanel = React.createClass {
     @node.resetButton = (Button {label: 'Reset', onClick: @props.onReset})
   render: ->
     (
-      div {}, [
+      div {id: 'control-panel'}, [
         @node.startButton
         @node.thanksButton
         @node.continueButton

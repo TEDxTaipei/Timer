@@ -1,5 +1,5 @@
 (function() {
-  var Button, ControlPanel, StartButton, Timer, TimerPanel, audio, button, continueMessage, div, getDOMNode, input, messageTime, strong, thanksMessage, timeoutMessage, _ref;
+  var Button, ControlPanel, CurrentTime, StartButton, Timer, TimerPanel, audio, button, continueMessage, div, getDOMNode, input, messageTime, strong, thanksMessage, timeoutMessage, _ref;
 
   timeoutMessage = "Timeout!";
 
@@ -18,6 +18,7 @@
   TimerPanel = React.createClass({
     componentWillMount: function() {
       this.node = {};
+      this.node.currentTime = CurrentTime({});
       this.node.timer = Timer({
         onPause: this.handlePause
       });
@@ -54,7 +55,39 @@
       return timer.start();
     },
     render: function() {
-      return div({}, [this.node.timer, this.node.controlPanel]);
+      return div({}, [this.node.currentTime, this.node.timer, this.node.controlPanel]);
+    }
+  });
+
+  CurrentTime = React.createClass({
+    getInitialState: function() {
+      return {
+        time: this.getTimeString()
+      };
+    },
+    componentDidMount: function() {
+      return this.timer = setInterval(this.updateTime, 1000);
+    },
+    updateTime: function() {
+      return this.setState({
+        time: this.getTimeString()
+      });
+    },
+    getTimeString: function() {
+      var timeString;
+
+      return timeString = (new Date()).toLocaleString("zh-TW", {
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric"
+      });
+    },
+    render: function() {
+      return div({
+        id: 'time-panel'
+      }, this.state.time);
     }
   });
 
@@ -140,16 +173,19 @@
     render: function() {
       if (this.state.message && this.state.messageTime > 0) {
         return div({
+          id: 'timer',
           className: 'message'
         }, this.state.message);
       }
       if (this.state.running) {
         return div({
+          id: 'timer',
           className: this.state.className
         }, this.prettyDisplay());
       }
       if (this.state.timeout) {
         return div({
+          id: 'timer',
           className: 'timeout'
         }, [
           timeoutMessage, audio({
@@ -158,7 +194,9 @@
           })
         ]);
       }
-      return div({}, [
+      return div({
+        id: 'timer'
+      }, [
         input({
           type: 'number',
           defaultValue: '1',
@@ -257,7 +295,9 @@
       });
     },
     render: function() {
-      return div({}, [this.node.startButton, this.node.thanksButton, this.node.continueButton, this.node.resetButton]);
+      return div({
+        id: 'control-panel'
+      }, [this.node.startButton, this.node.thanksButton, this.node.continueButton, this.node.resetButton]);
     }
   });
 
