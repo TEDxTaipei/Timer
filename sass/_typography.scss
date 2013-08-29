@@ -1,0 +1,19 @@
+@font-face {
+   font-family: "ultralight";
+   src:url("font/fontsitesans-ultralight-webfont.eot");
+   src:url("font/fontsitesans-ultralight-webfont.eot?#iefix") format("embedded-opentype");
+   src:local("☺"),
+      url("font/fontsitesans-ultralight-webfont.ttf") format("truetype"),
+      url("font/fontsitesans-ultralight-webfont.woff") format("woff"),
+      url("font/fontsitesans-ultralight-webfont.svg") format("svg");
+}
+
+body {
+   color: #FFF;
+   font-family: "ultralight";
+   font-weight: 300;
+   -webkit-text-size-adjust: none;
+   -webkit-font-smoothing: antialiased;
+   -moz-font-smoothing: antialiased;
+   text-rendering: optimizeLegibility;
+}

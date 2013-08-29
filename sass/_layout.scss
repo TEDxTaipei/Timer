@@ -17,7 +17,7 @@ $grid-padding   : 1em;
    white-space: nowrap;
 }
 @mixin main-font {
-   font-family: "centurygothicstd-bold";
+   font-family: "ultralight";
 }
 
 //$desktop: min-winth columns max-width;
@@ -27,3 +27,39 @@ $XL: 10 1440px;
 $L: 10 1200px;
 $M: 10 959px;
 $S: 10 600px;
+
+body {
+   @include susy-grid-background;
+   background-image: url(../images/black_linen_v2.png);
+}
+
+#time-panel {
+   @include span-columns(4 omega);
+   @include pie-clearfix;
+   @include margin-leader(1.2);
+   font-size: 5em;
+   line-height: 1;
+   span {}
+}
+
+#timer {
+   @include span-columns(10);
+   height: 300px;
+   margin-top: -150px;
+   position: absolute;
+   top: 50%;
+   height: 300px;
+   line-height: 300px;
+   text-align: center;
+   font-size: 25em;
+   input {}
+}
+
+#control-panel {
+   button {
+      background-color: #EEE;
+      color: #333;
+      border: none;
+      @include main-font;
+   }
+}

@@ -83,7 +83,7 @@
     },
     getTimeString: function() {
       var timeString;
-      return timeString = (new Date()).toLocaleString("en-ca", {
+      return timeString = (new Date()).toLocaleString("en", {
         hour: "numeric",
         minute: "numeric",
         second: "numeric"
@@ -170,7 +170,7 @@
       leftTime = this.state.leftTime;
       minutes = Math.floor(leftTime / 60);
       seconds = leftTime % 60;
-      return "" + minutes + " : " + seconds;
+      return "" + minutes + ":" + seconds;
     },
     render: function() {
       if (this.state.message && this.state.messageTime > 0) {

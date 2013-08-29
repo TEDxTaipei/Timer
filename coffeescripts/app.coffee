@@ -67,7 +67,7 @@ CurrentTime = React.createClass {
     @setState {time: @getTimeString()}
 
   getTimeString: ->
-    timeString = (new Date()).toLocaleString("en-ca", {
+    timeString = (new Date()).toLocaleString("en", {
       hour: "numeric"
       minute: "numeric"
       second: "numeric"
@@ -137,7 +137,7 @@ Timer = React.createClass {
     minutes = Math.floor(leftTime/60)
     seconds = leftTime%60
 
-    return "#{minutes} : #{seconds}"
+    return "#{minutes}:#{seconds}"
 
   render: ->
     if @state.message and @state.messageTime > 0 then return (div {id: 'timer', className: 'message'}, @state.message)
