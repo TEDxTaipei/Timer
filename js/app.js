@@ -1,5 +1,5 @@
 (function() {
-  var Button, ControlPanel, CurrentTime, StartButton, Timer, TimerPanel, audio, button, continueButtonString, continueMessage, div, getDOMNode, input, messageTime, pauseButtonString, resetButtonString, startButtonString, strong, thanksButtonString, thanksMessage, timeoutMessage, _ref;
+  var Button, ControlPanel, CurrentTime, StartButton, Timer, TimerPanel, audio, button, continueButtonString, continueMessage, div, getDOMNode, input, messageTime, numberPrefix, pauseButtonString, resetButtonString, startButtonString, strong, thanksButtonString, thanksMessage, timeoutMessage, _ref;
 
   timeoutMessage = "Timeout!";
 
@@ -18,6 +18,13 @@
   continueButtonString = "Continue";
 
   resetButtonString = "Reset";
+
+  numberPrefix = function(number, lenght) {
+    while (lenght - number.toString().length > 0) {
+      number = "0" + number;
+    }
+    return number;
+  };
 
   _ref = React.DOM, div = _ref.div, strong = _ref.strong, button = _ref.button, input = _ref.input, audio = _ref.audio;
 
@@ -50,6 +57,7 @@
     },
     handlePause: function() {
       var controlPanel, timer;
+
       controlPanel = this.node.controlPanel.node;
       controlPanel.startButton.setState({
         running: false
@@ -59,6 +67,7 @@
     },
     handleStart: function() {
       var timer;
+
       timer = this.node.timer;
       return timer.start();
     },
@@ -83,6 +92,7 @@
     },
     getTimeString: function() {
       var timeString;
+
       return timeString = (new Date()).toLocaleString("en-ca", {
         hour: "numeric",
         minute: "numeric",
@@ -109,6 +119,7 @@
     },
     start: function() {
       var seconds;
+
       if (!this.state.running) {
         seconds = 0;
         seconds = seconds + Number(this.refs.minute.getDOMNode().value.trim()) * 60;
@@ -136,6 +147,7 @@
     },
     updateTime: function() {
       var newMessageTime, newTime;
+
       if (this.state.leftTime <= 0) {
         this.clearTimer();
         this.setState({
@@ -167,9 +179,10 @@
     },
     prettyDisplay: function() {
       var leftTime, minutes, seconds;
+
       leftTime = this.state.leftTime;
-      minutes = Math.floor(leftTime / 60);
-      seconds = leftTime % 60;
+      minutes = numberPrefix(Math.floor(leftTime / 60), 2);
+      seconds = numberPrefix(leftTime % 60, 2);
       return "" + minutes + " : " + seconds;
     },
     render: function() {
@@ -215,11 +228,13 @@
   Button = React.createClass({
     componentDidMount: function() {
       var node;
+
       node = this.getDOMNode();
       return node.addEventListener("click", this.handleClick);
     },
     componentWillUnmonut: function() {
       var node;
+
       node = this.getDOMNode();
       return node.removeEvnetListener("click", this.handleClick);
     },
@@ -242,11 +257,13 @@
     },
     componentDidMount: function() {
       var node;
+
       node = this.getDOMNode();
       return node.addEventListener("click", this.handleClick);
     },
     componentWillUnmonut: function() {
       var node;
+
       node = this.getDOMNode();
       return node.removeEvnetListener("click", this.handleClick);
     },
