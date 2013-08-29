@@ -13,6 +13,13 @@ thanksButtonString = "Thanks"
 continueButtonString = "Continue"
 resetButtonString = "Reset"
 
+# Number Prefix
+numberPrefix = (number, lenght) ->
+  while lenght - number.toString().length > 0
+    number = "0" + number
+
+  number
+
 # React DOM
 {div, strong, button, input, audio} = React.DOM
 
@@ -99,7 +106,6 @@ Timer = React.createClass {
 
     @timer = setInterval(@updateTime, 1000)
 
-
   pause: ->
     @setState {running: false}
     @props.onPause()
@@ -134,8 +140,8 @@ Timer = React.createClass {
   prettyDisplay: ->
     leftTime = @state.leftTime
 
-    minutes = Math.floor(leftTime/60)
-    seconds = leftTime%60
+    minutes = numberPrefix Math.floor(leftTime/60), 2
+    seconds = numberPrefix leftTime%60, 2
 
     return "#{minutes}:#{seconds}"
 
@@ -144,7 +150,7 @@ Timer = React.createClass {
     if @state.running then return (div {id: 'timer', className: @state.className}, @prettyDisplay())
     if @state.timeout then return (div {id: 'timer', className: 'timeout'}, [timeoutMessage, (audio {src: 'ring.mp3', autoPlay: true})])
     (div {id: 'timer'}, [
-      input {type: 'number', defaultValue: '1', ref: 'minute'}, ":"
+      input {type: 'number', defaultValue: '6', ref: 'minute'}, ":"
       input {type: 'number', defaultValue: '0', ref: 'second'}
     ])
 }

@@ -98,6 +98,11 @@ body {
   background-image: url(../images/black_linen_v2.png);
 }
 
+input, button {
+  -webkit-appearance: caret;
+  font-family: "ultralight";
+}
+
 #time-panel {
   width: 39.18919%;
   float: right;
@@ -127,12 +132,231 @@ body {
   height: 300px;
   line-height: 300px;
   text-align: center;
-  font-size: 25em;
+  font-size: 400px;
+}
+#timer input {
+  width: 450px;
+  background-color: transparent;
+  color: #eee;
+  height: 400px;
+  line-height: 300px;
+  text-align: left;
+  font-size: 300px;
+  display: inline-block;
+  vertical-align: top;
+  position: relative;
+  top: -20px;
+}
+#timer > div {
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+  transition: all 0.5s;
+}
+#timer.left-1-minute {
+  -webkit-animation: left-1-minute 5s;
+  -moz-animation: left-1-minute 5s;
+  -ms-animation: left-1-minute 5s;
+  -o-animation: left-1-minute 5s;
+  animation: left-1-minute 5s;
+}
+#timer.left-30-second {
+  -webkit-animation: left-30-second 5s;
+  -moz-animation: left-30-second 5s;
+  -ms-animation: left-30-second 5s;
+  -o-animation: left-30-second 5s;
+  animation: left-30-second 5s;
+}
+#timer.left-10-second {
+  -webkit-animation: left-10-second 2s infinite;
+  -moz-animation: left-10-second 2s infinite;
+  -ms-animation: left-10-second 2s infinite;
+  -o-animation: left-10-second 2s infinite;
+  animation: left-10-second 2s infinite;
 }
 
+@-moz-keyframes left-1-minute {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #333;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-webkit-keyframes left-1-minute {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #333;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-o-keyframes left-1-minute {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #333;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-ms-keyframes left-1-minute {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #333;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@keyframes left-1-minute {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #333;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-moz-keyframes left-30-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-webkit-keyframes left-30-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-o-keyframes left-30-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-ms-keyframes left-30-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@keyframes left-30-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+  }
+}
+
+@-moz-keyframes left-10-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+    position: relative;
+    left: 3px;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+    position: relative;
+    left: -3px;
+  }
+}
+
+@-webkit-keyframes left-10-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+    position: relative;
+    left: 3px;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+    position: relative;
+    left: -3px;
+  }
+}
+
+@-o-keyframes left-10-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+    position: relative;
+    left: 3px;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+    position: relative;
+    left: -3px;
+  }
+}
+
+@-ms-keyframes left-10-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+    position: relative;
+    left: 3px;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+    position: relative;
+    left: -3px;
+  }
+}
+
+@keyframes left-10-second {
+  0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+    color: #EF1100;
+    position: relative;
+    left: 3px;
+  }
+
+  5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+    color: #FFF;
+    position: relative;
+    left: -3px;
+  }
+}
+
+#control-panel {
+  position: absolute;
+  bottom: 1px;
+}
 #control-panel button {
-  background-color: #EEE;
+  display: block;
+  width: 100px;
+  margin: 10px;
+  padding: 5px 10px;
+  background-color: #eee;
   color: #333;
   border: none;
   font-family: "ultralight";
+  font-size: 20px;
 }

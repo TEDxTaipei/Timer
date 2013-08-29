@@ -33,6 +33,11 @@ body {
    background-image: url(../images/black_linen_v2.png);
 }
 
+input,button {
+   -webkit-appearance: caret;
+   @include main-font;
+}
+
 #time-panel {
    @include span-columns(4 omega);
    @include pie-clearfix;
@@ -51,15 +56,77 @@ body {
    height: 300px;
    line-height: 300px;
    text-align: center;
-   font-size: 25em;
-   input {}
+   font-size: 400px;
+   input {
+      width: 450px;
+      background-color: transparent;
+      color: #eee;
+      height: 400px;
+      line-height: 300px;
+      text-align: left;
+      font-size: 300px;
+      display: inline-block;
+      vertical-align: top;
+      position: relative;
+      top: -20px;
+   }
+   > div {
+      @include transition(all .5s);
+   }
+   &.left-1-minute {
+      @include animation(left-1-minute 5s);
+   }
+   &.left-30-second {
+      @include animation(left-30-second 5s);
+   }
+   &.left-10-second {
+      @include animation(left-10-second 2s infinite);
+   }
+}
+
+@include keyframes(left-1-minute) {
+   0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+      color: #333;
+   }
+   5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+      color: #FFF;
+   }
+}
+
+@include keyframes(left-30-second) {
+   0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+      color: #EF1100;
+   }
+   5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+      color: #FFF;
+   }
+}
+
+@include keyframes(left-10-second) {
+   0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
+      color: #EF1100;
+      position: relative;
+      left: 3px;
+   }
+   5%,15%,25%,35%,45%,55%,65%,75%,85%,95% {
+      color: #FFF;
+      position: relative;
+      left: -3px;
+   }
 }
 
 #control-panel {
+   position: absolute;
+   bottom: 1px;
    button {
-      background-color: #EEE;
+      display: block;
+      width: 100px;
+      margin: 10px;
+      padding: 5px 10px;
+      background-color: #eee;
       color: #333;
       border: none;
       @include main-font;
+      font-size: 20px;
    }
 }
