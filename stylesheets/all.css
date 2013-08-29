@@ -104,7 +104,7 @@ input, button {
 }
 
 #time-panel {
-  width: 39.18919%;
+  width: 49.32432%;
   float: right;
   margin-right: 0;
   *margin-left: -1em;
@@ -113,6 +113,7 @@ input, button {
   margin-top: 28px;
   font-size: 5em;
   line-height: 1;
+  text-align: right;
 }
 #time-panel:after {
   content: "";
@@ -173,6 +174,9 @@ input, button {
   -ms-animation: left-10-second 2s infinite;
   -o-animation: left-10-second 2s infinite;
   animation: left-10-second 2s infinite;
+}
+#timer.message {
+  font-size: 300px;
 }
 
 @-moz-keyframes left-1-minute {

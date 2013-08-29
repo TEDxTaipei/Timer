@@ -39,11 +39,12 @@ input,button {
 }
 
 #time-panel {
-   @include span-columns(4 omega);
+   @include span-columns(5 omega);
    @include pie-clearfix;
    @include margin-leader(1.2);
    font-size: 5em;
    line-height: 1;
+   text-align: right;
    span {}
 }
 
@@ -81,6 +82,9 @@ input,button {
    }
    &.left-10-second {
       @include animation(left-10-second 2s infinite);
+   }
+   &.message {
+      font-size: 300px;
    }
 }
 
