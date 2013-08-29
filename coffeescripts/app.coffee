@@ -67,7 +67,7 @@ CurrentTime = React.createClass {
     @setState {time: @getTimeString()}
 
   getTimeString: ->
-    timeString = (new Date()).toLocaleString("zh-TW", {
+    timeString = (new Date()).toLocaleString("en-ca", {
       hour: "numeric"
       minute: "numeric"
       second: "numeric"
@@ -75,7 +75,7 @@ CurrentTime = React.createClass {
 
   render: ->
     (
-      div {id: 'time-panel'}, @state.time
+      div {id: 'time-panel'}, "NOW - ", @state.time
     )
 }
 

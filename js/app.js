@@ -50,7 +50,6 @@
     },
     handlePause: function() {
       var controlPanel, timer;
-
       controlPanel = this.node.controlPanel.node;
       controlPanel.startButton.setState({
         running: false
@@ -60,7 +59,6 @@
     },
     handleStart: function() {
       var timer;
-
       timer = this.node.timer;
       return timer.start();
     },
@@ -85,8 +83,7 @@
     },
     getTimeString: function() {
       var timeString;
-
-      return timeString = (new Date()).toLocaleString("zh-TW", {
+      return timeString = (new Date()).toLocaleString("en-ca", {
         hour: "numeric",
         minute: "numeric",
         second: "numeric"
@@ -95,7 +92,7 @@
     render: function() {
       return div({
         id: 'time-panel'
-      }, this.state.time);
+      }, "NOW - ", this.state.time);
     }
   });
 
@@ -112,7 +109,6 @@
     },
     start: function() {
       var seconds;
-
       if (!this.state.running) {
         seconds = 0;
         seconds = seconds + Number(this.refs.minute.getDOMNode().value.trim()) * 60;
@@ -140,7 +136,6 @@
     },
     updateTime: function() {
       var newMessageTime, newTime;
-
       if (this.state.leftTime <= 0) {
         this.clearTimer();
         this.setState({
@@ -172,7 +167,6 @@
     },
     prettyDisplay: function() {
       var leftTime, minutes, seconds;
-
       leftTime = this.state.leftTime;
       minutes = Math.floor(leftTime / 60);
       seconds = leftTime % 60;
@@ -221,13 +215,11 @@
   Button = React.createClass({
     componentDidMount: function() {
       var node;
-
       node = this.getDOMNode();
       return node.addEventListener("click", this.handleClick);
     },
     componentWillUnmonut: function() {
       var node;
-
       node = this.getDOMNode();
       return node.removeEvnetListener("click", this.handleClick);
     },
@@ -250,13 +242,11 @@
     },
     componentDidMount: function() {
       var node;
-
       node = this.getDOMNode();
       return node.addEventListener("click", this.handleClick);
     },
     componentWillUnmonut: function() {
       var node;
-
       node = this.getDOMNode();
       return node.removeEvnetListener("click", this.handleClick);
     },

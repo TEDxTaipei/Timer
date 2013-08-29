@@ -1,0 +1,29 @@
+$total-columns  : 10;
+$column-width   : 6.5em;
+$gutter-width   : 1em;
+$grid-padding   : 1em;
+
+@mixin debug-box-center {
+   display: block;
+   float: none;
+   margin-left: 0px;
+}
+@mixin close {
+   display: none;
+}
+@mixin text-overflow {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+}
+@mixin main-font {
+   font-family: "centurygothicstd-bold";
+}
+
+//$desktop: min-winth columns max-width;
+$XXXL: 1681px 10;
+$XXL: 1441px 10 1680px;
+$XL: 10 1440px;
+$L: 10 1200px;
+$M: 10 959px;
+$S: 10 600px;
