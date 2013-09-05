@@ -273,7 +273,7 @@ MessageBox = React.createClass {
     unless @state.hide
       (
         div {id: 'message'}, [
-          input {ref: 'message', onChange: @handleChange}
+          input {ref: 'message', onChange: @handleChange, placeholder: 'Type some message ...'}
         ]
       )
     else

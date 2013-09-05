@@ -394,7 +394,8 @@
         }, [
           input({
             ref: 'message',
-            onChange: this.handleChange
+            onChange: this.handleChange,
+            placeholder: 'Type some message ...'
           })
         ]);
       } else {

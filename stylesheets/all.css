@@ -179,6 +179,14 @@ input, button {
   font-size: 300px;
 }
 
+#fast-time {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  margin-left: -150px;
+}
+
 @-moz-keyframes left-1-minute {
   0%,10%,20%,30%,40%,50%,60%,70%,80%,90%,100% {
     color: #333;
@@ -364,4 +372,15 @@ input, button {
   font-family: "ultralight";
   font-size: 20px;
   font-weight: bold;
+}
+
+#message {
+  position: absolute;
+  right: 1%;
+  bottom: 1%;
+  width: 80%;
+}
+#message > input {
+  width: 100%;
+  font-size: 2em;
 }
