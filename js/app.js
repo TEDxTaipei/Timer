@@ -1,5 +1,5 @@
 (function() {
-  var Button, ControlPanel, CurrentTime, StartButton, Timer, TimerPanel, audio, button, continueButtonString, continueMessage, div, getDOMNode, input, messageTime, numberPrefix, pauseButtonString, resetButtonString, startButtonString, strong, thanksButtonString, thanksMessage, timeoutMessage, _ref;
+  var Button, ControlPanel, CurrentTime, MessageBox, MessageButton, StartButton, Timer, TimerPanel, audio, button, continueButtonString, continueMessage, div, getDOMNode, input, messageOffButtonString, messageOnButtonString, messageTime, numberPrefix, pauseButtonString, resetButtonString, startButtonString, strong, thanksButtonString, thanksMessage, timeoutMessage, _ref;
 
   timeoutMessage = "Timeout!";
 
@@ -18,6 +18,10 @@
   continueButtonString = "Continue";
 
   resetButtonString = "Reset";
+
+  messageOnButtonString = "Message";
+
+  messageOffButtonString = "Close";
 
   numberPrefix = function(number, lenght) {
     while (lenght - number.toString().length > 0) {
@@ -39,24 +43,52 @@
       this.node.timer = Timer({
         onPause: this.handlePause
       });
-      return this.node.controlPanel = ControlPanel({
+      this.node.controlPanel = ControlPanel({
         onStart: this.handleStart,
         onPause: this.handlePause,
         onReset: this.handleReset,
         onMessage: this.handleMessage
       });
+      return this.node.message = MessageBox({
+        onChange: this.handleChange
+      });
+    },
+    handleChange: function(message) {
+      return this.handleMessage(message, -1);
     },
     handleMessage: function(message, time) {
-      return this.node.timer.setState({
-        message: message,
-        messageTime: time
-      });
+      if (time === -1) {
+        this.node.timer.setState({
+          message: message,
+          keepMessage: true
+        });
+        return this.toggleMessage(true);
+      } else {
+        this.node.timer.setState({
+          message: message,
+          messageTime: time,
+          keepMessage: false
+        });
+        return this.toggleMessage(false);
+      }
+    },
+    toggleMessage: function(status) {
+      if (status) {
+        return this.node.message.setState({
+          hide: false
+        });
+      } else {
+        return this.node.message.setState({
+          hide: true
+        });
+      }
     },
     handleReset: function() {
       return this.node.timer.reset();
     },
     handlePause: function() {
       var controlPanel, timer;
+
       controlPanel = this.node.controlPanel.node;
       controlPanel.startButton.setState({
         running: false
@@ -66,11 +98,12 @@
     },
     handleStart: function() {
       var timer;
+
       timer = this.node.timer;
       return timer.start();
     },
     render: function() {
-      return div({}, [this.node.currentTime, this.node.timer, this.node.controlPanel]);
+      return div({}, [this.node.currentTime, this.node.timer, this.node.controlPanel, this.node.message]);
     }
   });
 
@@ -90,6 +123,7 @@
     },
     getTimeString: function() {
       var timeString;
+
       return timeString = (new Date()).toLocaleString("en", {
         hour: "numeric",
         minute: "numeric",
@@ -116,6 +150,7 @@
     },
     start: function() {
       var seconds;
+
       if (!this.state.running) {
         seconds = 0;
         seconds = seconds + Number(this.refs.minute.getDOMNode().value.trim()) * 60;
@@ -143,6 +178,7 @@
     },
     updateTime: function() {
       var newMessageTime, newTime;
+
       if (this.state.leftTime <= 0) {
         this.clearTimer();
         this.setState({
@@ -151,7 +187,7 @@
         return this.pause();
       }
       newTime = this.state.leftTime - 1;
-      newMessageTime = this.state.messageTime - 1;
+      newMessageTime = this.state.keepMessage ? 1 : this.state.messageTime - 1;
       if (newTime === 60) {
         this.setState({
           className: 'left-1-minute'
@@ -174,6 +210,7 @@
     },
     prettyDisplay: function() {
       var leftTime, minutes, seconds;
+
       leftTime = this.state.leftTime;
       minutes = numberPrefix(Math.floor(leftTime / 60), 2);
       seconds = numberPrefix(leftTime % 60, 2);
@@ -222,11 +259,13 @@
   Button = React.createClass({
     componentDidMount: function() {
       var node;
+
       node = this.getDOMNode();
       return node.addEventListener("click", this.handleClick);
     },
     componentWillUnmonut: function() {
       var node;
+
       node = this.getDOMNode();
       return node.removeEvnetListener("click", this.handleClick);
     },
@@ -249,11 +288,13 @@
     },
     componentDidMount: function() {
       var node;
+
       node = this.getDOMNode();
       return node.addEventListener("click", this.handleClick);
     },
     componentWillUnmonut: function() {
       var node;
+
       node = this.getDOMNode();
       return node.removeEvnetListener("click", this.handleClick);
     },
@@ -270,6 +311,68 @@
     render: function() {
       this.label = this.state.running ? this.props.pauseLabel : this.props.startLabel;
       return button({}, this.label);
+    }
+  });
+
+  MessageButton = React.createClass({
+    getInitialState: function() {
+      return {
+        on: false
+      };
+    },
+    componentDidMount: function() {
+      var node;
+
+      node = this.getDOMNode();
+      return node.addEventListener("click", this.handleClick);
+    },
+    componentWillUnmonut: function() {
+      var node;
+
+      node = this.getDOMNode();
+      return node.removeEvnetListener("click", this.handleClick);
+    },
+    handleClick: function() {
+      this.setState({
+        on: !this.state.on
+      });
+      if (this.state.on) {
+        return this.props.onClick("", -1);
+      } else {
+        return this.props.onClick("", 0);
+      }
+    },
+    render: function() {
+      this.label = this.state.on ? this.props.offLabel : this.props.onLabel;
+      return button({}, this.label);
+    }
+  });
+
+  MessageBox = React.createClass({
+    getInitialState: function() {
+      return {
+        hide: true
+      };
+    },
+    handleChange: function() {
+      console.log(this.refs.message.getDOMNode().value.trim());
+      return this.props.onChange(this.refs.message.getDOMNode().value.trim());
+    },
+    render: function() {
+      if (!this.state.hide) {
+        return div({
+          id: 'message'
+        }, [
+          input({
+            ref: 'message',
+            onChange: this.handleChange
+          })
+        ]);
+      } else {
+        return div({
+          id: 'message'
+        });
+      }
     }
   });
 
@@ -294,15 +397,20 @@
         message: continueMessage,
         messageTime: messageTime
       });
-      return this.node.resetButton = Button({
+      this.node.resetButton = Button({
         label: resetButtonString,
         onClick: this.props.onReset
+      });
+      return this.node.messageButton = MessageButton({
+        onLabel: messageOnButtonString,
+        offLabel: messageOffButtonString,
+        onClick: this.props.onMessage
       });
     },
     render: function() {
       return div({
         id: 'control-panel'
-      }, [this.node.startButton, this.node.thanksButton, this.node.continueButton, this.node.resetButton]);
+      }, [this.node.startButton, this.node.thanksButton, this.node.continueButton, this.node.resetButton, this.node.messageButton]);
     }
   });
 

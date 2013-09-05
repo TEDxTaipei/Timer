@@ -12,6 +12,8 @@ pauseButtonString = "Pause"
 thanksButtonString = "Thanks"
 continueButtonString = "Continue"
 resetButtonString = "Reset"
+messageOnButtonString = "Message"
+messageOffButtonString = "Close"
 
 # Number Prefix
 numberPrefix = (number, lenght) ->
@@ -38,9 +40,24 @@ TimerPanel = React.createClass {
       onReset: @handleReset
       onMessage: @handleMessage
     })
+    @node.message = (MessageBox {onChange: @handleChange})
+
+  handleChange: (message) ->
+    @handleMessage(message, -1)
 
   handleMessage: (message, time) ->
-    @node.timer.setState {message: message, messageTime: time}
+    if time is -1
+      @node.timer.setState {message: message, keepMessage: true}
+      @toggleMessage(true)
+    else
+      @node.timer.setState {message: message, messageTime: time, keepMessage: false}
+      @toggleMessage(false)
+
+  toggleMessage: (status) ->
+    if status
+      @node.message.setState {hide: false}
+    else
+      @node.message.setState {hide: true}
 
   handleReset: ->
     @node.timer.reset()
@@ -60,6 +77,7 @@ TimerPanel = React.createClass {
       @node.currentTime
       @node.timer
       @node.controlPanel
+      @node.message
     ])
 }
 
@@ -124,7 +142,7 @@ Timer = React.createClass {
       @setState {timeout: true}
       return @pause()
     newTime = @state.leftTime - 1
-    newMessageTime = @state.messageTime - 1
+    newMessageTime = if @state.keepMessage then 1 else @state.messageTime - 1
 
     if newTime is 60
       @setState {className: 'left-1-minute'}
@@ -203,6 +221,55 @@ StartButton = React.createClass {
     )
 }
 
+MessageButton = React.createClass {
+  getInitialState: ->
+    {on: false}
+
+  componentDidMount: ->
+    node = @getDOMNode()
+    node.addEventListener("click", @handleClick)
+
+  componentWillUnmonut: ->
+    node = @getDOMNode()
+    node.removeEvnetListener("click", @handleClick)
+
+  handleClick: ->
+    @setState {on: !@state.on}
+
+    if @state.on
+      @props.onClick("", -1)
+    else
+      @props.onClick("", 0)
+
+  render: ->
+    @label = if @state.on then @props.offLabel else @props.onLabel
+
+    (
+      button {}, @label
+    )
+}
+
+MessageBox = React.createClass {
+  getInitialState: ->
+    {hide: true}
+
+  handleChange: ->
+    console.log @refs.message.getDOMNode().value.trim()
+    @props.onChange(@refs.message.getDOMNode().value.trim())
+
+  render: ->
+    unless @state.hide
+      (
+        div {id: 'message'}, [
+          input {ref: 'message', onChange: @handleChange}
+        ]
+      )
+    else
+      (
+        div {id: 'message'}
+      )
+}
+
 ControlPanel = React.createClass {
   componentWillMount: ->
     @node = {}
@@ -210,6 +277,7 @@ ControlPanel = React.createClass {
     @node.thanksButton = (Button {label: thanksButtonString, onClick: @props.onMessage, message: thanksMessage, messageTime: messageTime})
     @node.continueButton = (Button {label: continueButtonString, onClick: @props.onMessage, message: continueMessage, messageTime: messageTime})
     @node.resetButton = (Button {label: resetButtonString, onClick: @props.onReset})
+    @node.messageButton = (MessageButton {onLabel: messageOnButtonString, offLabel: messageOffButtonString, onClick: @props.onMessage})
   render: ->
     (
       div {id: 'control-panel'}, [
@@ -217,6 +285,7 @@ ControlPanel = React.createClass {
         @node.thanksButton
         @node.continueButton
         @node.resetButton
+        @node.messageButton
       ]
     )
 }
