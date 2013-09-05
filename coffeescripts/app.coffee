@@ -163,6 +163,10 @@ Timer = React.createClass {
 
     return "#{minutes}:#{seconds}"
 
+  setTime: (event) ->
+    target = @refs.minute.getDOMNode()
+    target.value = event.target.value
+
   render: ->
     if @state.message and @state.messageTime > 0 then return (div {id: 'timer', className: 'message'}, @state.message)
     if @state.running then return (div {id: 'timer', className: @state.className}, @prettyDisplay())
@@ -170,6 +174,14 @@ Timer = React.createClass {
     (div {id: 'timer'}, [
       input {type: 'number', defaultValue: '6', ref: 'minute'}, ":"
       input {type: 'number', defaultValue: '0', ref: 'second'}
+      div {id: 'fast-time', class: 'fast-button'}, [
+        button {onClick: @setTime, value: 3}, 3
+        button {onClick: @setTime, value: 6}, 6
+        button {onClick: @setTime, value: 8}, 8
+        button {onClick: @setTime, value: 12}, 12
+        button {onClick: @setTime, value: 15}, 15
+        button {onClick: @setTime, value: 18}, 18
+      ]
     ])
 }
 

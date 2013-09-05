@@ -216,6 +216,12 @@
       seconds = numberPrefix(leftTime % 60, 2);
       return "" + minutes + ":" + seconds;
     },
+    setTime: function(event) {
+      var target;
+
+      target = this.refs.minute.getDOMNode();
+      return target.value = event.target.value;
+    },
     render: function() {
       if (this.state.message && this.state.messageTime > 0) {
         return div({
@@ -251,7 +257,30 @@
           type: 'number',
           defaultValue: '0',
           ref: 'second'
-        })
+        }), div({
+          id: 'fast-time',
+          "class": 'fast-button'
+        }, [
+          button({
+            onClick: this.setTime,
+            value: 3
+          }, 3), button({
+            onClick: this.setTime,
+            value: 6
+          }, 6), button({
+            onClick: this.setTime,
+            value: 8
+          }, 8), button({
+            onClick: this.setTime,
+            value: 12
+          }, 12), button({
+            onClick: this.setTime,
+            value: 15
+          }, 15), button({
+            onClick: this.setTime,
+            value: 18
+          }, 18)
+        ])
       ]);
     }
   });
